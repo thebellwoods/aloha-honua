@@ -14,6 +14,8 @@ To run each challenge, simple comment and uncomment them out.
 --[[
 HelloPlaydate.isRunning = true;
 HelloPlaydate.myGameSetUp()
+credits
+player image from https://www.pinterest.ca/pin/337910778306440720/
 ]]
 HelloPlaydate.isRunning = true;
 HelloPlaydate.myGameSetUp()

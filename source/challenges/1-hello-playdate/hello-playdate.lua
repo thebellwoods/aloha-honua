@@ -11,8 +11,17 @@ import "CoreLibs/timer"
 
 --- common practice to create a class for each module so that you can use this code base from you main.lua
 HelloPlaydate = {
-	isRunning = false
+	isRunning = false,
+	assets = "challenges/1-hello-playdate/assets/", -- relative path seems to be difficult so that you create the path from the source 
+	A = playdate.kButtonA,
+	B = playdate.kButtonB,
+	UP = playdate.kButtonUp,
+	DOWN = playdate.kButtonDown,
+	LEFT = playdate.kButtonLeft,
+	RIGHT = playdate.kButtonRight
 }
+
+
 
 -- Declaring this "gfx" shorthand will make your life easier. Instead of having
 -- to preface all graphics calls with "playdate.graphics", just use "gfx."
@@ -26,24 +35,27 @@ local gfx <const> = playdate.graphics
 
 local playerSprite = nil
 local screenHeight = 240
-local playerSprintY = screenHeight / 2
-
+local screenCentre = screenHeight / 2
+local playerSpriteStartY = 80
+local playerSpriteMaxY = playerSpriteStartY * 3 -- hardcode to 3 options for now 
+local playerSpriteY = playerSpriteStartY -- the player sprite starts on the same y position as the first menu item 
 local menuOptionHeight = 40
+
 
 
 local menuOptions = {
 	{
-		y = 100,
+		y = 80,
 		option = "option a",
 		height=  menuOptionHeight
 	},
 	{
-	   y = 100 + menuOptionHeight,
+	   y = 80 + menuOptionHeight,
 	   option =  "option b",
 	   height = menuOptionHeight
 	},
 	{
-	   y = 100 + menuOptionHeight * 2,
+	   y = 80 + menuOptionHeight * 2,
 	   option = "option c",
 	   height = menuOptionHeight
 	},
@@ -53,15 +65,12 @@ local menuOptions = {
 
 function HelloPlaydate.myGameSetUp()
 
-	-- Set up the player sprite.
-	-- The :setCenter() call specifies that the sprite will be anchored at its center.
-	-- The :moveTo() call moves our sprite to the center of the display.
 
-	local playerImage = gfx.image.new("Images/playerImage")
+	local playerImage = gfx.image.new(HelloPlaydate.assets .. "wanda")
 	assert( playerImage ) -- make sure the image was where we thought
 
 	playerSprite = gfx.sprite.new( playerImage )
-	playerSprite:moveTo( 200, playerSprintY ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
+	playerSprite:moveTo( 200, playerSpriteStartY ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
 	playerSprite:add() -- This is critical!
 
 	-- We want an environment displayed behind our sprite.
@@ -71,7 +80,7 @@ function HelloPlaydate.myGameSetUp()
 	--       and call :setZIndex() with some low number so the background stays behind
 	--       your other sprites.
 
-	local backgroundImage = gfx.image.new( "Images/background" )
+	local backgroundImage = gfx.image.new(HelloPlaydate.assets .. "background")
 	assert( backgroundImage )
 
 	gfx.sprite.setBackgroundDrawingCallback(
@@ -93,7 +102,7 @@ end
 -- This function is called right before every frame is drawn onscreen.
 -- Use this function to poll input, run game logic, and move sprites.
 	
-	
+ 	
 local function getSpritePostion()
 	
 	for i, obj in ipairs(menuOptions) do
@@ -101,14 +110,23 @@ local function getSpritePostion()
 		local menuOptionYMin = obj.y
 		local menuOptionYMax = menuOptionYMin + menuOptionHeight
 		
-		if playerSprintY >= menuOptionYMin and playerSprintY <=  menuOptionYMax then 
+		if playerSpriteY >= menuOptionYMin and playerSpriteY <  menuOptionYMax then 
 			print('listing to sprite update y', obj.option)
 		end
 	end
 	
-	print('listing to sprite update y', "" .. playerSprintY)
+	print('listing to sprite update y', "" .. playerSpriteY)
 
 end
+
+local function resetPlayerSprite()
+	playerSpriteY = playerSpriteStartY
+	playerSprite:moveTo( 200, playerSpriteStartY )
+end 	
+
+local function reset()
+	resetPlayerSprite()
+end	
 
 
 local function helloPlaydateUpate()
@@ -117,24 +135,52 @@ local function helloPlaydateUpate()
 	-- Note that it is possible for more than one of these directions
 	-- to be pressed at once, if the user is pressing diagonally.
 	
-	if playdate.buttonIsPressed( playdate.kButtonUp ) then
+	-- we only need up and down for this challenge
+	
+	-- UP
+	if playdate.buttonIsPressed( HelloPlaydate.UP ) then
 		playerSprite:moveBy( 0, -menuOptionHeight )
-		playerSprintY = playerSprintY - menuOptionHeight
+		
+		if playerSpriteY > playerSpriteStartY then
+			playerSpriteY = playerSpriteY - menuOptionHeight
+		else 
+			playerSpriteY = playerSpriteStartY
+		end	
+		
 	end
+	
+	-- RIGHT
+	--[[
 	if playdate.buttonIsPressed( playdate.kButtonRight ) then
 		playerSprite:moveBy( 2, 0 )
-	end
-	if playdate.buttonIsPressed( playdate.kButtonDown ) then
+	end]]
+	
+	-- DOWN
+	if playdate.buttonIsPressed( HelloPlaydate.DOWN ) then
 		playerSprite:moveBy( 0, menuOptionHeight )
-		playerSprintY = playerSprintY + menuOptionHeight
+		
+		if playerSpriteY < playerSpriteMaxY then
+			playerSpriteY = playerSpriteY + menuOptionHeight
+		else
+			playerSpriteY = playerSpriteStartY
+		end
+			 
 	end
+	
+	-- LEFT
+	--[[
 	if playdate.buttonIsPressed( playdate.kButtonLeft ) then
 		playerSprite:moveBy( -2, 0 )
-	end
+	end]]
 	
 	-- Call the functions below in playdate.update() to draw sprites and keep
 	-- timers updated. (We aren't using timers in this example, but in most
 	-- average-complexity games, you will.)
+	
+	-- we can use B to reset 
+	if playdate.buttonIsPressed( HelloPlaydate.B ) then
+		reset()
+	end	
 	
 	gfx.sprite.update()
 	playdate.timer.updateTimers()

@@ -1,0 +1,6 @@
+name=Aloha Moon
+author=Headwinds
+description=this is a hello world game series
+bundleID=net.headwinds.aloha-moon
+version=1.0
+imagePath=SystemAssets/

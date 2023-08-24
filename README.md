@@ -15,6 +15,6 @@ what can I do with the sample lua playdate code from [writing a game](https://sd
 folder: challenges > 1-hello-playdate
 
 
-#### Author
+#### Artists
 
 [headwinds](https://github.com/headwinds) is primarily a fronted dev with Javascript as most comfortable language, and will be attempting to adapt many common patterns from web dev to lua.

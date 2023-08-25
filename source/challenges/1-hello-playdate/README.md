@@ -15,6 +15,7 @@ main things I want to learn include how to:
 
 ## Credits 
 
-I mined a couple open source projects to make this happen so much thanks to:
+much thanks to:
 - [panels](https://github.com/cadin/panels/tree/main)
 - [2048](https://github.com/hteumeuleu/2048)
+- [wanda](https://www.pinterest.ca/pin/337910778306440720/)

@@ -35,30 +35,36 @@ local gfx <const> = playdate.graphics
 -- Here's our arrow sprite declaration. We'll scope it to this file because
 -- several functions need to access it.
 local menuOptionHeight = 40
+local menuOptionWidth = 120
 local menuOptions = {
 	{
 		y = 80,
 		option = "cut the red wire",
-		height=  menuOptionHeight
+		height=  menuOptionHeight,
+		isSelected = true
 	},
 	{
 	   y = 80 + menuOptionHeight,
 	   option =  "cut the blue wire",
-	   height = menuOptionHeight
+	   height = menuOptionHeight,
+	   isSelected = false
 	},
 	{
 	   y = 80 + menuOptionHeight * 2,
 	   option = "cut the yellow wire",
-	   height = menuOptionHeight
+	   height = menuOptionHeight,
+	   isSelected = false
 	},
 }
 
 
 local arrowSprite = nil
+local playerSprite = nil
 local screenHeight = 240
 local screenCentre = screenHeight / 2
 local arrowSpriteStartX = 40
 local arrowSpriteStartY = 80
+local arrowWidth = 40
 local totalMenuOptions = #menuOptions -- gets the length
 local arrowSpriteY = arrowSpriteStartY -- the arrow sprite starts on the same y position as the first menu item 
 
@@ -82,6 +88,29 @@ local listFont = gfx.getSystemFont()
 
 
 -- A function to set up our game environment.
+	
+local menuOffset = 0 -- do I need this?!
+local function drawMenuOption(menuOption, i)
+	print("menu option ", menuOption.isSelected)
+	if menuOption.isSelected then
+		gfx.setColor(gfx.kColorBlack)
+		local menuOffset = arrowSpriteStartY + ( menuOptionHeight * i)
+		print("menu menuOffset ", "" .. menuOffset)
+		local x = arrowSpriteStartX + arrowWidth
+		local y = menuOffset
+		gfx.fillRoundRect(x, menuOffset, menuOptionWidth, menuOptionHeight, 4)
+		-- gfx.drawRoundRect(x + 1, y, width - 2, height, 4)
+		gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+		menuOffset = 0
+	else
+		gfx.setImageDrawMode(gfx.kDrawModeCopy)
+	end
+	
+	gfx.setFont(listFont)
+	
+	gfx.drawTextInRect("" .. menuOption.option.. "", 4, 8, menuOptionWidth, menuOptionHeight, nil, "...", kTextAlignment.left)
+	
+end
 
 function HelloPlaydate.myGameSetUp()
 
@@ -89,10 +118,22 @@ function HelloPlaydate.myGameSetUp()
 	assert( arrowImage ) -- make sure the image was where we thought
 
 	arrowSprite = gfx.sprite.new( arrowImage )
-	arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteStartY ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
+	arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteStartY ) 
 	arrowSprite:add() -- This is critical!
+	
+	
+	local playerImage = gfx.image.new(HelloPlaydate.images .. "wanda_dark")
+	assert( playerImage ) -- make sure the image was where we thought
+	
+	playerSprite = gfx.sprite.new( playerImage )
+	playerSprite:moveTo( 205, 140 ) 
+	playerSprite:add() 
+	
+	for i, menuOption in ipairs(menuOptions) do
+		drawMenuOption(menuOption, i)
+	end
 
-	-- We want an environment displayed behind our sprite.
+	-- We want an environment displayed behind our sprites.
 	-- There are generally two ways to do this:
 	-- 1) Use setBackgroundDrawingCallback() to draw a background image. (This is what we're doing below.)
 	-- 2) Use a tilemap, assign it to a sprite with sprite:setTilemap(tilemap),
@@ -122,7 +163,7 @@ end
 -- Use this function to poll input, run game logic, and move sprites.
 	
  	
-local function onUpdateListenToSpritePostion()
+local function onUpdateLogSpritePostion()
 	
 	for i, obj in ipairs(menuOptions) do
 		-- which menu item is the arrow beside?
@@ -165,6 +206,9 @@ local function helloPlaydateUpate()
 		if arrowSpriteY > arrowSpriteStartY then
 			arrowSpriteY = arrowSpriteY - menuOptionHeight
 			arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteY )
+			selectionSound:play()
+			print("UP updated spring y", "" .. arrowSpriteY )
+			print("UP updated spring x", "" .. arrowSpriteStartX )
 			
 		else 
 			arrowSpriteY = arrowSpriteStartY
@@ -187,9 +231,10 @@ local function helloPlaydateUpate()
 		
 		if arrowSpriteY < arrowSpriteMaxY then
 			arrowSpriteY = arrowSpriteY + menuOptionHeight
+			arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteY )
+			selectionSound:play()
 			print("DOWN updated spring y", "" .. arrowSpriteY )
 			print("DOWN updated spring x", "" .. arrowSpriteStartX )
-			arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteY )
 		else
 			resetArrowSprite()
 		end
@@ -214,7 +259,7 @@ local function helloPlaydateUpate()
 	gfx.sprite.update()
 	playdate.timer.updateTimers()
 	
-	-- onUpdateListenToSpritePostion()
+	-- onUpdateLogSpritePostion()
 	
 end
 

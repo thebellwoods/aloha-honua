@@ -24,12 +24,10 @@ folder: challenges > 1-hello-playdate
 
 This is full list of credits - each folder has its own readme with a further breakdown of where each of these were used.
 
-much thanks to:
-
 - [panels](https://github.com/cadin/panels/tree/main)
 - [2048](https://github.com/hteumeuleu/2048)
 - [wanda](https://www.pinterest.ca/pin/337910778306440720/)
 
-#### Learning Playdate resources
+#### More Learning Playdate Resources
 
 - [SquidGodDev](https://github.com/SquidGodDev)

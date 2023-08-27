@@ -35,30 +35,37 @@ local gfx <const> = playdate.graphics
 -- Here's our arrow sprite declaration. We'll scope it to this file because
 -- several functions need to access it.
 local menuOptionHeight = 40
+local menuOptionWidth = 120
+local startingY = 40
 local menuOptions = {
 	{
-		y = 80,
+		y = startingY,
 		option = "cut the red wire",
-		height=  menuOptionHeight
+		height=  menuOptionHeight,
+		isSelected = true
 	},
 	{
-	   y = 80 + menuOptionHeight,
+	   y = startingY + menuOptionHeight,
 	   option =  "cut the blue wire",
-	   height = menuOptionHeight
+	   height = menuOptionHeight,
+	   isSelected = false
 	},
 	{
-	   y = 80 + menuOptionHeight * 2,
+	   y = startingY + menuOptionHeight * 2,
 	   option = "cut the yellow wire",
-	   height = menuOptionHeight
+	   height = menuOptionHeight,
+	   isSelected = false
 	},
 }
 
 
 local arrowSprite = nil
+local playerSprite = nil
 local screenHeight = 240
 local screenCentre = screenHeight / 2
 local arrowSpriteStartX = 40
-local arrowSpriteStartY = 80
+local arrowSpriteStartY = startingY
+local arrowWidth = 40
 local totalMenuOptions = #menuOptions -- gets the length
 local arrowSpriteY = arrowSpriteStartY -- the arrow sprite starts on the same y position as the first menu item 
 
@@ -76,12 +83,61 @@ local showSound = playdate.sound.sampleplayer.new(HelloPlaydate.audio .. "audio/
 
 local headerFont = gfx.getSystemFont("bold")
 -- local listFont = Panels.Font.get(Panels.Settings.path .. "assets/fonts/Asheville-Narrow-14-Bold")--gfx.getSystemFont()
-
+local gFontFullCircle = playdate.graphics.font.new(HelloPlaydate.fonts .. "font-full-circle")
 local listFont = gfx.getSystemFont()
 
 
 
 -- A function to set up our game environment.
+	
+local menuOffset = 0 -- do I need this?!
+local function drawMenuOption(menuOption, i)
+	
+	local imageWidth = 170
+	local imageHeight = 34
+	local text = menuOption.option
+	local img = gfx.image.new(imageWidth, imageHeight)
+	
+	if menuOption.isSelected == false then
+		gfx.pushContext(img)
+		-- Background
+		gfx.setColor(playdate.graphics.kColorWhite)
+		gfx.fillRoundRect(0, 0, imageWidth, imageHeight, 4)
+		-- Text
+		gfx.setImageDrawMode(playdate.graphics.kDrawModeFillBlack)
+		gfx.setFont(gFontFullCircle)
+		gfx.drawTextInRect(string.upper(text), 8, 10, imageWidth - 16, imageHeight, nil, nil, kTextAlignment.left)
+		--playdate.graphics.drawTextInRect("" .. self.value, 8, 24, imageWidth, imageHeight, nil, nil, kTextAlignment.left)
+		gfx.setImageDrawMode(playdate.graphics.kDrawModeCopy)
+		gfx.popContext()
+	else
+		gfx.pushContext(img)
+		-- Background
+		gfx.setColor(playdate.graphics.kColorBlack)
+		gfx.fillRoundRect(0, 0, imageWidth, imageHeight, 4)
+		-- Text
+		gfx.setImageDrawMode(playdate.graphics.kDrawModeFillWhite)
+		gfx.setFont(gFontFullCircle)
+		gfx.drawTextInRect(string.upper(text), 8, 10, imageWidth - 16, imageHeight, nil, nil, kTextAlignment.left)
+		--playdate.graphics.drawTextInRect("" .. self.value, 8, 24, imageWidth, imageHeight, nil, nil, kTextAlignment.left)
+		gfx.setImageDrawMode(playdate.graphics.kDrawModeCopy)
+		gfx.popContext()
+	end
+	
+	--self:setImage(img)
+	local menuSprite = gfx.sprite.new( img )
+	menuSprite:moveTo( 160, menuOption.y ) 
+	menuSprite:add() 
+		
+	
+	
+end
+
+function drawMenu()
+	for i, menuOption in ipairs(menuOptions) do
+		drawMenuOption(menuOption, i)
+	end
+end 	
 
 function HelloPlaydate.myGameSetUp()
 
@@ -89,10 +145,20 @@ function HelloPlaydate.myGameSetUp()
 	assert( arrowImage ) -- make sure the image was where we thought
 
 	arrowSprite = gfx.sprite.new( arrowImage )
-	arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteStartY ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
+	arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteStartY ) 
 	arrowSprite:add() -- This is critical!
+	
+	
+	local playerImage = gfx.image.new(HelloPlaydate.images .. "wanda_dark")
+	assert( playerImage ) -- make sure the image was where we thought
+	
+	playerSprite = gfx.sprite.new( playerImage )
+	playerSprite:moveTo(40, 165 ) 
+	playerSprite:add() 
+	
 
-	-- We want an environment displayed behind our sprite.
+	
+	-- We want an environment displayed behind our sprites.
 	-- There are generally two ways to do this:
 	-- 1) Use setBackgroundDrawingCallback() to draw a background image. (This is what we're doing below.)
 	-- 2) Use a tilemap, assign it to a sprite with sprite:setTilemap(tilemap),
@@ -110,6 +176,7 @@ function HelloPlaydate.myGameSetUp()
 		end
 	)
 
+
 end
 
 -- Now we'll call the function above to configure our game.
@@ -122,15 +189,18 @@ end
 -- Use this function to poll input, run game logic, and move sprites.
 	
  	
-local function onUpdateListenToSpritePostion()
+local function onUpdateLogSpritePostion()
 	
 	for i, obj in ipairs(menuOptions) do
 		-- which menu item is the arrow beside?
 		local menuOptionYMin = obj.y
 		local menuOptionYMax = menuOptionYMin + menuOptionHeight
+
 		
 		if arrowSpriteY >= menuOptionYMin and arrowSpriteY <  menuOptionYMax then 
-			print('listing to sprite update y', obj.option)
+			print('onUpdateLogSpritePostion to sprite update y', obj.option)
+			print('onUpdateLogSpritePostion to sprite update isSelected', "" .. obj.isSelected)
+
 		end
 	end
 	
@@ -151,13 +221,27 @@ end
 
 -- note careful with playdate.buttonIsPressed which means it held down so it might get more events than once
 
+local function updateSelectedMenuOption()
+	for i, obj in ipairs(menuOptions) do
+		-- which menu item is the arrow beside?
+		local menuOptionYMin = obj.y
+		local menuOptionYMax = menuOptionYMin + menuOptionHeight
+		obj.isSelected = false
+		if arrowSpriteY >= menuOptionYMin and arrowSpriteY <  menuOptionYMax then 
+			print('onUpdateLogSpritePostion to sprite update y', obj.option)
+			-- print('onUpdateLogSpritePostion to sprite update isSelected', "" .. obj.isSelected)
+			obj.isSelected = true
+		end
+	end
+end
+
+
 local function helloPlaydateUpate()
 	-- Poll the d-pad and move our arrow accordingly.
 	-- (There are multiple ways to read the d-pad; this is the simplest.)
 	-- Note that it is possible for more than one of these directions
 	-- to be pressed at once, if the user is pressing diagonally.
 	
-	-- we only need up and down for this challenge
 	
 	-- UP
 	if playdate.buttonJustReleased( HelloPlaydate.UP ) then
@@ -165,6 +249,10 @@ local function helloPlaydateUpate()
 		if arrowSpriteY > arrowSpriteStartY then
 			arrowSpriteY = arrowSpriteY - menuOptionHeight
 			arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteY )
+			selectionSound:play()
+			print("UP updated spring y", "" .. arrowSpriteY )
+			print("UP updated spring x", "" .. arrowSpriteStartX )
+			updateSelectedMenuOption()
 			
 		else 
 			arrowSpriteY = arrowSpriteStartY
@@ -187,9 +275,11 @@ local function helloPlaydateUpate()
 		
 		if arrowSpriteY < arrowSpriteMaxY then
 			arrowSpriteY = arrowSpriteY + menuOptionHeight
+			arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteY )
+			selectionSound:play()
 			print("DOWN updated spring y", "" .. arrowSpriteY )
 			print("DOWN updated spring x", "" .. arrowSpriteStartX )
-			arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteY )
+			updateSelectedMenuOption()
 		else
 			resetArrowSprite()
 		end
@@ -211,10 +301,12 @@ local function helloPlaydateUpate()
 		reset()
 	end	
 	
+	drawMenu()
+	
 	gfx.sprite.update()
 	playdate.timer.updateTimers()
 	
-	-- onUpdateListenToSpritePostion()
+	-- onUpdateLogSpritePostion()
 	
 end
 

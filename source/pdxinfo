@@ -1,6 +1,6 @@
-name=Aloha Moon
-author=Headwinds
-description=this is a hello world game series
-bundleID=net.headwinds.aloha-moon
-version=1.0
-imagePath=SystemAssets/
+name=aloha moon
+description=a series of playdate experiments
+author=headwinds
+bundleID=com.headwinds.aloha-moon
+version=0.0.1
+buildNumber=1999

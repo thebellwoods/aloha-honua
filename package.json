@@ -1,0 +1,21 @@
+{
+  "name": "aloha-moon",
+  "version": "0.0.1",
+  "description": "a series of playdate experiments",
+  "author": "headwinds",
+  "scripts": {
+    "start": "pd dev",
+    "build": "pd",
+    "build:release": "NODE_ENV=production pd",
+    "simulate": "pd simulate",
+    "simulate:release": "NODE_ENV=production pd simulate"
+  },
+  "playdate": {
+    "pdxinfo": {
+      "name": "aloha moon"
+    }
+  },
+  "devDependencies": {
+    "pddx": "^3.2.2"
+  }
+}

@@ -146,7 +146,7 @@ function HelloPlaydate.myGameSetUp()
 
 	arrowSprite = gfx.sprite.new( arrowImage )
 	arrowSprite:moveTo( arrowSpriteStartX, arrowSpriteStartY ) 
-	arrowSprite:add() -- This is critical!
+	-- arrowSprite:add() -- This is critical!
 	
 	
 	local playerImage = gfx.image.new(HelloPlaydate.images .. "wanda_dark")

@@ -4,6 +4,15 @@ This is a short series of hello world type examples in Lua on the Playdate conso
 
 When I first heard the name lua, I thought it might Hawaiian as in luau! But it's actually Portuguese meaning "moon". You can learn more about the origin on the [lua wiki](<https://en.wikipedia.org/wiki/Lua_(programming_language)>)
 
+### VS Code
+
+```
+npm install
+npm start
+```
+
+Much thanks to [playdate-metroidvania](https://github.com/colingourlay/playdate-metroidvania) for this familar setup
+
 ## Challenges
 
 Each of these examples are more like challenges since I didn't know how to accomplish them before writing each one. I may not actually complete each challenge but hopefully I'll at least learn something new during the struggle.
@@ -16,6 +25,10 @@ what can I do with the sample lua playdate code from [writing a game](https://sd
 
 folder: challenges > 1-hello-playdate
 
+#### 6. Effects
+
+How do imagetables work and how can I use them to create a simple animation? Let's animate lightning!
+
 #### Artists
 
 [headwinds](https://github.com/headwinds) is primarily a fronted dev with Javascript as most comfortable language, and will be attempting to adapt many common patterns from web dev to lua.
@@ -27,6 +40,7 @@ This is full list of credits - each folder has its own readme with a further bre
 - [panels](https://github.com/cadin/panels/tree/main)
 - [2048](https://github.com/hteumeuleu/2048)
 - [wanda](https://www.pinterest.ca/pin/337910778306440720/)
+- [AnimatedSprite](https://github.com/Whitebrim/AnimatedSprite)
 
 #### More Learning Playdate Resources
 

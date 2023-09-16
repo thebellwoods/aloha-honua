@@ -8,6 +8,16 @@ With a top down board, I can setup the final scene where our magnificient seven 
 
 I like the simplicity of the tileset in the [playdate-metroidvania github](https://github.com/colingourlay/playdate-metroidvania) and would like to use it as a starting point for my own level design. I may enhance it to include more tiles which better express the harsh wilderness of Westeros.
 
+### The Plan
+
+I like to start on paper and map out the level. I started at the end of the episode which features the frozen lake and planned the assault of the horde of wights.
+
+<img src="./ldtk/0-thumbnail-plan.jpg" width="300px" />
+
+I researched and jotted all the major events from the [Episode: Beyond the Wall](<https://gameofthrones.fandom.com/wiki/Beyond_the_Wall_(episode)>) and added them to the plan. I created a [10 x0 10 grid template](https://github.com/headwinds/cross-country/blob/trunk/adventure-set/10x10-grid.png) that I can print out and use to draw the level. It helps to brainstorm ideas and visualize the level.
+
+<img src="./ldtk/0-level-plan.jpg" width="800px" />
+
 ### Open LDTK - What do I do now?!
 
 Let's begin by creating a new project. If you're were of fan of [Origin](https://richardgarriott.com/gaming/), you'll remember the first thing you had to do was create a character. In LDTK, the first thing you do is create a world.

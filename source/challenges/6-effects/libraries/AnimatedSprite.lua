@@ -25,6 +25,9 @@ end
 function AnimatedSprite:init(imagetable, states, animate)
 	AnimatedSprite.super.init(self)
 
+	-- print("AnimatedSprite init called - animate: ", animate)
+	-- print("AnimatedSprite init called - states: ", states)
+
 	---@type table
 	if (type(imagetable) == "string") then
 		imagetable = gfx.imagetable.new(imagetable)

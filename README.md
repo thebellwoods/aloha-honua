@@ -45,3 +45,7 @@ This is full list of credits - each folder has its own readme with a further bre
 #### More Learning Playdate Resources
 
 - [SquidGodDev](https://github.com/SquidGodDev)
+
+#### Fun
+
+- [origin of hello world](https://www.tiktok.com/@vscode/video/7275525548443553070?_r=1&_t=8fS168YLR0X)

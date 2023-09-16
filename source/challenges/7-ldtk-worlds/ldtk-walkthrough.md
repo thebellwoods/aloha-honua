@@ -114,6 +114,10 @@ With the hero on the map, I wanted to draw the walls around him. I tried to use 
 
 Obviously, I found this part frustrating.
 
+**UPDATE**
+
+After several attempts, I finally figured out an approach to draw the walls and empty spaces. I've produced a [Youtube video](https://www.youtube.com/watch?v=gHvdy0IDf60) to show how I did it.
+
 <img src="./ldtk/9-fail-to-draw-walls.png" width="800px" />
 
 After failing to draw this walls in project, I returned the origin world.ldtk file and copied the walls group from there.
@@ -151,3 +155,11 @@ The last feature I want to try was to create a new level by copying my freshly c
 ### Test in the Playdate Simulator - Rinse & Repeat
 
 Each time you save this project in LDTK, it will automatically update the project in the Playdate Simulator. You can see the results of your work by clicking the Play button.
+
+<img src="./ldtk/14-players.png" width="800px" />
+
+After placing the players, we can zoom out to see the completed world which resembles my plan with some minor differences and simplifications.
+
+<img src="./ldtk/14-world.png" width="800px" />
+
+Now it's ready to code up the game and develop the adventure.

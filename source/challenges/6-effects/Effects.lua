@@ -109,7 +109,7 @@ function Effects:checkSpritePosition()
     end
 end
 
-local function reset()
+function Effects:reset()
     currentX = 40
     currentY = 220
     playerSprite:moveTo(currentX, currentY )

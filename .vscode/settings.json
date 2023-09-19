@@ -1,8 +1,14 @@
 {
-    "Lua.diagnostics.globals": [
-        "import",
-        "class",
-        "Effects",
-        "Lightening"
-    ]
+  "Lua.diagnostics.globals": [
+    "import",
+    "class",
+    "Effects",
+    "Lightening",
+    "Beyond",
+    "playdate",
+    "World"
+  ],
+  "Lua.diagnostics.disable": [
+    "redundant-parameter"
+  ]
 }

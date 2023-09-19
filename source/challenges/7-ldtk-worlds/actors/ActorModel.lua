@@ -3,6 +3,8 @@
 
 class ('ActorModel').extends()
 
+local actor_status = {"alive", "dead"}
+
 function ActorModel:init(name, hp, attack, defense, speed, lvl, exp, gold, drop, status, weakness, resistance)
     self.name = name
     self.hp = hp

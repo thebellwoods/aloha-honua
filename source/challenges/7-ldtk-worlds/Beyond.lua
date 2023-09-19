@@ -18,6 +18,7 @@ import "challenges/7-ldtk-worlds/World"
 -- actors
 import "challenges/7-ldtk-worlds/Actor"
 import "challenges/7-ldtk-worlds/actors/hero/HeroModel"
+import "challenges/7-ldtk-worlds/actors/hero/HeroSprite"
 
 import "challenges/7-ldtk-worlds/Monster"
 
@@ -29,17 +30,19 @@ local gfx <const> = playdate.graphics
 
 
 TAGS = {
-  Player = 1,
-  Lightening = 2,
-  background = 3
+    HeroSprite = 1,
+MonsterSprite = 2,
+background = 3,
+DragonSprite = 4,
 }
 
 Z_INDEXES = {
-    Player = 2,
-    Lightening = 3,
     background = 1,
+    HeroSprite = 2,
+    MonsterSprite = 2,
+    ActorSprite = 2,
+    Dragon = 3,
 }
-
 
 
 -- for this challenge, let's make Beyond a global class 
@@ -84,60 +87,6 @@ local guards = {
     "unnamed guard 1", "unnamed guard 2", "unnamed guard 3"
 }
 
--- East Watch
---[[
-   The East Watch is a castle on the wall.
-   Jon meets with Davos and create a party to capture the wight.
-   He releases the prisoners: Tormund, Beric Dondarrion, Thoros of Myr, Sandor Clegane, Jorah Mormont, and Gendry. 
-]]
-
-
-
-local eastWatchCast = {
-    monsters = {},
-    -- heros = HeroModel:createParty(magnificentSeven),
-    -- guards = HeroModel:createParty(guards),
-}
-
--- Plains
---[[
-    The plains are a vast expanse of land beyond the wall.
-
-local plains = {
-    -- monsters = { Monster:new("Undead Polarbear") },
-    -- magnificent seven
-    -- heros = HeroModel:createParty(magnificentSeven),
-    guards = HeroModel:createParty({"unnamed guard 1", "unnamed guard 2", "unnamed guard 3"}) ,
-}
--- Woods before Arrow Mountain
---[[
-    The woods are a light forest beyond the wall that the party travels through to reach Arrow Mountain.
-
-local woods = {
-    monsters = {
-        "Wight", "White Walker"
-    },
-    heroes = magnificentSeven,
-}
-
--- Arrow Mountain
-
--- The Frozen Lake
---[[
-    The Frozen Lake is a lake beyond the wall. 
-    It is the location of the battle between the White Walkers and the Night's Watch.
-    The Night King kills Viserion and turns him into a wight.
-    Jon Snow and his party are rescued by Daenerys Targaryen and her dragons.
-
-local frozenLakeCast = {
-    monsters = {
-        wights = Monster:createHorde("Wight", 1000),
-        whiteWalkers = Monster:createHorde("White Walker", 100),
-        nightKing = Monster:new("Night King"),
-    },
-    heros = {},
-}
-]]
 
 local function printGameState()
     print("Day: " .. gameState.day)
@@ -173,14 +122,19 @@ function Beyond:init()
     -- magnificentSeven[1]:tableDump()
     print( magnificentSeven[1].name )
 
-    local jon = util:getActorByName(magnificentSeven, "Jon Snow")
-    local jorah = util:getActorByName(magnificentSeven, "Jorah Mormont")
-    print("jorah drops: " .. jorah.drop[3])
+    -- local jon = util:getActorByName(magnificentSeven, "Jon Snow")
+    -- local jorah = util:getActorByName(magnificentSeven, "Jorah Mormont")
+    -- print("jorah drops: " .. jorah.drop[3])
 
     -- local world = World()
     -- world:load()
 
-   self:goToLevel("Level_0")
+
+
+    self:goToLevel("Level_0")
+    self.spawnX = 12 * 16
+    self.spawnY = 5 * 16
+    self.player = HeroSprite(self.spawnX, self.spawnY, self)
 
 end
 

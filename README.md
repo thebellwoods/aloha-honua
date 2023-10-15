@@ -2,7 +2,7 @@
 
 # aloha-moon
 
-This is a short series of Lua & Playdate examples that build off each other. By mastering all seven challenges, one should confident enough to build their own game.
+This is a short series of Lua & Playdate examples that build off each other. By mastering all seven challenges, one should feel confident enough to build their own game.
 
 When I first heard the name lua, I thought it might be Hawaiian in origin; as in luau! But it's actually Portuguese meaning "moon". You can learn more about the origin on the [lua wiki](<https://en.wikipedia.org/wiki/Lua_(programming_language)>)
 
@@ -15,11 +15,9 @@ npm install
 npm start
 ```
 
-Much thanks to [playdate-metroidvania](https://github.com/colingourlay/playdate-metroidvania) for this familar setup
-
 ## Challenges
 
-Each of these examples are more like challenges since I didn't know how to accomplish them before writing each one. I may not actually complete each challenge but hopefully I'll at least learn something new during the struggle.
+Each of these examples are more like challenges since I was learning as I was attempting to design and develop them.
 
 #### 1. Hello
 

@@ -49,3 +49,9 @@ This is full list of credits - each folder has its own readme with a further bre
 #### Fun
 
 - [origin of hello world](https://www.tiktok.com/@vscode/video/7275525548443553070?_r=1&_t=8fS168YLR0X)
+- [Typescript to Lua Roguelike](https://gist.github.com/anderoonies/20fa9eb8ade544d07cc4a65f4a56d4d60)
+- [PlaydateSDK with Typescript](https://devforum.play.date/t/playdate-sdk-with-typescript/369/3)
+
+#### Captain's log
+
+My [journey](./captains_log/playdate_dev_log.md) to discovering lua and the playdate console

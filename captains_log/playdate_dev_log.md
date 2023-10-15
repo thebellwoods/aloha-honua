@@ -4,7 +4,7 @@ As a christmas gift and thanks for work provided for on a side hustle, I was gif
 
 I haven't received the device yet but since there is a simulator, I can get started on developing a game.
 
-To scratch the surface, I tried using Pulp - https://play.date/pulp/39818/edit/ - but after a short time I realized I wanted to learn more about the language and the console.
+To scratch the surface, I tried using Pulp but after a short time I realized I wanted to learn more about the language and the console.
 
 After reading the guide, I settled on Lua although C is also an option but I imagine I'd get further with Lua in a shorter period of time.
 

@@ -1,8 +1,10 @@
 ## July 31/2023
 
-I started writing a game using Pulp - https://play.date/pulp/39818/edit/
+To scratch the surface, I tried using Pulp - https://play.date/pulp/39818/edit/ - but after a short time I realized I wanted to learn more about the language and the console.
 
-I downloaded and installed the Playdate SDK. I had to search for it to discover it was installed in my Developer folder on my Mac.
+After reading the guide, I settled on Lua although C is also an option but I imagine I'd get further with Lua in a shorter period of time.
+
+So I downloaded and installed the Playdate SDK. I had to search for it to discover it was installed in my Developer folder on my Mac.
 
 brandonflowers > Developer > PlaydateSDK
 

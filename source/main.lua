@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 
-import "./challenges/1-hello-playdate/GameHello"
+import "./challenges/1-hello/GameHello"
 -- import "./challenges/4-hud/GameGrid"
 -- import "./challenges/4-hud/GameHud"
 -- import "./challenges/6-effects/GameEffects"
